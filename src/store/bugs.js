@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { createSelector } from 'reselect'
 
 let lastId = 0
 
@@ -24,5 +25,19 @@ export const { bugAdded, bugResolved } = slice.actions
 export default slice.reducer
 
 // Selector (takes state and returns computed state)
-export const getUnresolvedBugs = (state) =>
-  state.entities.bugs.filter((bug) => !bug.resolved)
+// export const getUnresolvedBugs = (state) =>
+//   state.entities.bugs.filter((bug) => !bug.resolved)
+
+// Memoization (a technique for optimizing expensive functions)
+// f(x) => y (build a cache of inputs and outputs) {input: 1, output: 2}
+// the next time we call this function, before we actually execute it and run
+// through that expensive logic, we can look at the cache, and we know that we
+// previously passed 1 as the input, so if we're passing 1 again we already know
+// that the output should be 2 and we can just grab that from the cache.
+// This improves the app's performance.
+// We're using the 'reselect' library to help with this.
+export const getUnresolvedBugs = createSelector(
+  (state) => state.entities.bugs,
+  (state) => state.entities.projects,
+  (bugs, projects) => !bugs.resolved
+)
