@@ -1,9 +1,6 @@
 const logger = (param) => (store) => (next) => (action) => {
-  console.log('Logging to', param)
-  console.log('store', store)
-  console.log('next', next)
-  console.log('action', action)
-  next(action)
+  console.log('Logging', param)
+  return next(action)
 }
 
 export default logger
