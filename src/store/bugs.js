@@ -62,7 +62,7 @@ export const loadBugs = () => (dispatch, getState) => {
     return
   }
 
-  dispatch(
+  return dispatch(
     apiCallBegan({
       url,
       onStart: bugsRequested.type,
